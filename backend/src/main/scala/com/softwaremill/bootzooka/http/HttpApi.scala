@@ -40,8 +40,9 @@ class HttpApi(
     endpoints: ServerEndpoints,
     adminEndpoints: ServerEndpoints,
     collectorRegistry: CollectorRegistry,
-    config: HttpConfig
-) extends StrictLogging {
+    config: HttpConfig,
+    wsRoutes: HttpRoutes[Task]
+  ) extends StrictLogging {
   private val apiContextPath = "/api/v1"
   private val endpointsToRoutes = new EndpointsToRoutes(http, apiContextPath)
 
@@ -64,6 +65,7 @@ class HttpApi(
           // for /api/v1 requests, first trying the API; then the docs; then, returning 404
           s"$apiContextPath" -> CORS(monitoredRoutes <+> docsRoutes <+> respondWithNotFound, corsConfig),
           "/admin" -> adminRoutes,
+          "/ws" -> wsRoutes,
           // for all other requests, first trying getting existing webapp resource;
           // otherwise, returning index.html; this is needed to support paths in the frontend apps (e.g. /login)
           // the frontend app will handle displaying appropriate error messages

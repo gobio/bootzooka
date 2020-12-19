@@ -9,11 +9,15 @@ import RecoverLostPassword from "../../pages/RecoverLostPassword/RecoverLostPass
 import PasswordReset from "../../pages/PasswordReset/PasswordReset";
 import NotFound from "../../pages/NotFound/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
+import SpeechToText from "../../pages/SpeechToText/SpeechToText";
 
 const Routes: React.FC = () => (
   <Switch>
     <Route exact path="/">
       <Welcome />
+    </Route>
+    <Route path="/speech-to-text">
+      <SpeechToText />
     </Route>
     <Route path="/login">
       <Login />

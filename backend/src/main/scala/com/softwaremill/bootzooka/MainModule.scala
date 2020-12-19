@@ -7,8 +7,9 @@ import com.softwaremill.bootzooka.infrastructure.InfrastructureModule
 import com.softwaremill.bootzooka.metrics.MetricsModule
 import com.softwaremill.bootzooka.passwordreset.PasswordResetModule
 import com.softwaremill.bootzooka.security.SecurityModule
+import com.softwaremill.bootzooka.speechtotext.SttModule
 import com.softwaremill.bootzooka.user.UserModule
-import com.softwaremill.bootzooka.util.{Clock, DefaultIdGenerator, IdGenerator, ServerEndpoints, DefaultClock}
+import com.softwaremill.bootzooka.util.{Clock, DefaultClock, DefaultIdGenerator, IdGenerator, ServerEndpoints}
 import monix.eval.Task
 
 /**
@@ -20,7 +21,8 @@ trait MainModule
     with UserModule
     with PasswordResetModule
     with MetricsModule
-    with InfrastructureModule {
+    with InfrastructureModule
+    with SttModule {
 
   override lazy val idGenerator: IdGenerator = DefaultIdGenerator
   override lazy val clock: Clock = DefaultClock
@@ -30,7 +32,7 @@ trait MainModule
   private lazy val endpoints: ServerEndpoints = userApi.endpoints concatNel passwordResetApi.endpoints
   private lazy val adminEndpoints: ServerEndpoints = NonEmptyList.of(metricsApi.metricsEndpoint, versionApi.versionEndpoint)
 
-  lazy val httpApi: HttpApi = new HttpApi(http, endpoints, adminEndpoints, collectorRegistry, config.api)
+  lazy val httpApi: HttpApi = new HttpApi(http, endpoints, adminEndpoints, collectorRegistry, config.api, sttpApi.wsRoutes)
 
   lazy val startBackgroundProcesses: Task[Unit] = emailService.startProcesses().void
 }

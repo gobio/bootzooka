@@ -26,8 +26,8 @@ const Top: React.FC = () => {
             <LinkContainer exact to="/">
               <Nav.Link>Welcome</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/main">
-              <Nav.Link>Home</Nav.Link>
+            <LinkContainer to="/speech-to-text">
+              <Nav.Link>Speech-to-Text</Nav.Link>
             </LinkContainer>
             <div className="flex-grow-1" />
             {loggedIn ? (

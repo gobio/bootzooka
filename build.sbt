@@ -93,7 +93,12 @@ val catsEffectStack = Seq(
   "org.typelevel" %% "cats-effect-laws" % "2.3.0" % Test
 )
 
-val commonDependencies = baseDependencies ++ unitTestingStack ++ loggingDependencies ++ configDependencies
+val googleDependencies = Seq(
+  "com.google.cloud" % "google-cloud-speech" % "1.24.8",
+  "com.google.cloud" % "google-cloud-texttospeech" % "1.2.5"
+)
+
+val commonDependencies = baseDependencies ++ unitTestingStack ++ loggingDependencies ++ configDependencies ++ googleDependencies
 
 lazy val uiProjectName = "ui"
 lazy val uiDirectory = settingKey[File]("Path to the ui project directory")
