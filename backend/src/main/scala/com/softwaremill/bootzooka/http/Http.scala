@@ -9,6 +9,7 @@ import com.typesafe.scalalogging.StrictLogging
 import io.circe.Printer
 import monix.eval.Task
 import sttp.tapir.Codec.PlainCodec
+import sttp.tapir.generic.auto._
 import sttp.tapir.json.circe.TapirJsonCirce
 import sttp.model.StatusCode
 import sttp.tapir.{Codec, Endpoint, EndpointOutput, Schema, SchemaType, Tapir}
